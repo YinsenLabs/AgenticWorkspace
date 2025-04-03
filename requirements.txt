@@ -1,0 +1,2 @@
+setuptools>=75.9.1
+ipykernel>=6.25.1

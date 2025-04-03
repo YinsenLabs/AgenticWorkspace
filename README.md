@@ -25,8 +25,8 @@ AgenticWorkspace/
 │       └── helpers.py
 ├── tests/
 │   ├── __init__.py
-│   ├── test_calendar_event.py
-│   └── test_gemini_calls.py
+│   ├── test_llm_gemini_calls.py
+│   └── test_model_calendar_event_.py
 ├── notebooks/
 │   └── calendar_event_example.ipynb
 ├── README.md
