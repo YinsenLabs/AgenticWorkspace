@@ -1,5 +1,6 @@
 import pytest
 from typing import List
+from datetime import datetime
 from agentic_workspace.llm_clients.gemini_calls import call_gemini_calendar_event
 from agentic_workspace.models.calendar_event import CalendarEventModel, Time
 from dotenv import load_dotenv
@@ -22,8 +23,8 @@ def test_call_gemini_calendar_event_basic():
     assert event.text is not None
     assert event.summary is not None
     assert event.description is not None
-    assert isinstance(event.startTime, Time)
-    assert isinstance(event.endTime, Time)
+    assert isinstance(event.start, Time)
+    assert isinstance(event.end, Time)
 
 def test_call_gemini_calendar_event_multiple_events():
     """Test creating multiple calendar events"""
@@ -38,12 +39,12 @@ def test_call_gemini_calendar_event_multiple_events():
     for event in response:
         assert isinstance(event, CalendarEventModel)
         assert "hello world" in event.summary.lower()
-        assert event.startTime.timeZone == "Asia/Ho_Chi_Minh"
-        assert event.endTime.timeZone == "Asia/Ho_Chi_Minh"
+        assert event.start.timeZone == "Asia/Ho_Chi_Minh"
+        assert event.end.timeZone == "Asia/Ho_Chi_Minh"
         
         # Test duration is 2 days
-        start_time = event.startTime.dateTime
-        end_time = event.endTime.dateTime
+        start_time = datetime.fromisoformat(event.start.dateTime)
+        end_time = datetime.fromisoformat(event.end.dateTime)
         duration = end_time - start_time
         assert duration.days == 2
 
@@ -56,8 +57,8 @@ def test_call_gemini_calendar_event_with_timezone():
     event = response[0]
     
     # Test timezone
-    assert event.startTime.timeZone == "America/New_York"
-    assert event.endTime.timeZone == "America/New_York"
+    assert event.start.timeZone == "America/New_York"
+    assert event.end.timeZone == "America/New_York"
     
 
 def test_call_gemini_calendar_event_invalid_prompt():

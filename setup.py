@@ -28,6 +28,9 @@ setup(
         "pydantic>=2.0",
         "google-genai>=1.7.0",
         "python-dotenv>=1.0.1",
+        "google-auth-oauthlib>=1.0.0",
+        "google-auth>=2.22.0",
+        "google-api-python-client>=2.95.0",
     ],
     extras_require={
         "dev": [
