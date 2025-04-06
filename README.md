@@ -5,7 +5,12 @@ A workspace agent module integrate various functionalities to enhance productivi
 ## Installation
 
 ```bash
-pip install agentic_workspace
+pip install -e .
+```
+
+For dev:
+```bash
+pip install -e .[test]
 ```
 
 ## Features
@@ -25,16 +30,25 @@ AgenticWorkspace/
 │   ├── llm_clients/
 │   │   ├── __init__.py
 │   │   ├── base.py
+│   │   ├── prompt_template.py
 │   │   └── gemini_calls.py
-│   └── utils/
+│   └── tools/
 │       ├── __init__.py
-│       └── helpers.py
-├── tests/
-│   ├── __init__.py
-│   ├── test_llm_gemini_calls.py
-│   └── test_model_calendar_event_.py
+│       └── google_calendar/
+│           ├── __init__.py
+│           ├── actions.py
+│           ├── auth.py
+│           └── README.md
 ├── notebooks/
 │   └── calendar_event_example.ipynb
+├── tests/
+│   ├── __init__.py
+│   ├── test_design_calendar_event_promt.py
+│   ├── test_google_calendar_actions.py
+│   ├── test_llm_gemini_calls.py
+│   └── test_model_calendar_event_.py
+├── secrets/
+├── .env.example
 ├── README.md
 ├── requirements.txt
 └── setup.py
