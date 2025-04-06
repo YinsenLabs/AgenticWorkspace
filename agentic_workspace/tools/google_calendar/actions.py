@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from typing import Optional, List
+from datetime import datetime, timedelta, timezone
 
 from agentic_workspace.tools.google_calendar.auth import get_calendar_credentials
 
@@ -94,3 +95,26 @@ class GoogleCalendar:
         except HttpError as e:
             print(f"Error deleting event: {e}")
             return False
+
+    def query_free_busy(self, timeMin: Optional[str] = None, timeMax: Optional[str] = None, items: Optional[List[str]] = None) -> List[dict]:
+        try:
+            # Default values if not provided
+            if not timeMin:
+                timeMin = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+            if not timeMax:
+                timeMax = (datetime.now(timezone.utc) + timedelta(days=1)).replace(hour=23, minute=59, second=59, microsecond=999999).isoformat()
+            if not items:
+                items = [{"id": "primary"}]
+
+            body = {
+                "timeMin": timeMin,
+                "timeMax": timeMax,
+                "items": items
+            }
+
+            free_busy = self.service.freebusy().query(body=body).execute()
+            return free_busy
+        
+        except HttpError as e:
+            print(f"Error querying free busy: {e}")
+            return []
